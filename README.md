@@ -1,20 +1,39 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# AutoManager Pro - Monorepo (Front + Back)
 
-# Run and deploy your AI Studio app
+Projeto separado em duas aplicações:
 
-This contains everything you need to run your app locally.
+- `front/`: interface React (Vite)
+- `back/`: API Node.js + Prisma + PostgreSQL
 
-View your app in AI Studio: https://ai.studio/apps/drive/10yXjcVqq-08Ho362c7eXK44dTG4T5wa_
+## Banco de dados (PostgreSQL em container)
 
-## Run Locally
+```bash
+docker compose up -d
+```
 
-**Prerequisites:**  Node.js
+## Back-end (Node + Prisma)
 
+```bash
+cd back
+cp .env.example .env
+npm install
+npm run prisma:generate
+npm run prisma:migrate
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+API base: `http://localhost:3001/api`
+Healthcheck: `GET /api/health`
+
+## Front-end
+
+```bash
+cd front
+npm install
+npm run dev
+```
+
+## Observações
+
+- O schema Prisma foi construído a partir dos tipos atuais do front (`Vehicle`, `Client`, `Sale`, `User`).
+- Foi criado um adaptador de funções em `back/src/database/legacyDbAdapter.ts` com nomenclatura equivalente ao legado PHP informado.
